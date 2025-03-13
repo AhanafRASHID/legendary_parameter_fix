@@ -39,8 +39,8 @@ it has to be run from a terminal (e.g. PowerShell)
 
 - Linux, Windows (8.1+), or macOS (12.0+)
   + 32-bit operating systems are not supported
-- python 3.9+ (64-bit)
-  + (Windows) `pythonnet` is not yet compatible with 3.10+, use 3.9 if you plan to install `pywebview` 
+- python 3.11+ (64-bit)
+  + (Windows) `pythonnet` 
 - PyPI packages:
   + `requests`
   + (optional) `pywebview` for webview-based login
@@ -50,40 +50,23 @@ it has to be run from a terminal (e.g. PowerShell)
 
 ## How to run/install
 
-### Package Manager (Linux)
-
-Several distros already have packages available, check out the [Available Linux Packages](https://github.com/derrod/legendary/wiki/Available-Linux-Packages) wiki page for details.
-
-Currently this includes
-[Arch](https://github.com/derrod/legendary/wiki/Available-Linux-Packages#arch-aur),
-[Fedora](https://github.com/derrod/legendary/wiki/Available-Linux-Packages#fedora),
-[openSUSE](https://github.com/derrod/legendary/wiki/Available-Linux-Packages#opensuse), and
-[Gentoo](https://github.com/derrod/legendary/wiki/Available-Linux-Packages#gentoo)
-but more will be available in the future.
-
-Note that since packages are maintained by third parties it may take a bit for them to be updated to the latest version.
-If you always want to have the latest features and fixes available then using the PyPI distribution is recommended.
 
 ### Prebuilt Standalone Binary (Windows, macOS, and Linux)
 
+#### Windows and MacOS will be released soon.
 Download the `legendary` or `legendary.exe` binary from [the latest release](https://github.com/derrod/legendary/releases/latest)
 and move it to somewhere in your `$PATH`/`%PATH%`. Don't forget to `chmod +x` it on Linux/macOS.
 
 The Windows .exe and Linux/macOS executable were created with PyInstaller and will run standalone even without python being installed.
 Note that on Linux glibc >= 2.25 is required, so older distributions such as Ubuntu 16.04 or Debian stretch will not work.
 
-### Python Package (any)
 
-#### Prerequisites
+### Manually from the repo (Recommended)
+To prevent problems with permissions during installation, please upgrade your `pip` by running 
 
-To prevent problems with permissions during installation, please upgrade your `pip` by running `python -m pip install -U pip --user`. 
+`python -m pip install -U pip --user`.
 
-> **Tip:** You may need to replace `python` in the above command with `python3` on Linux/macOS, or `py -3` on Windows.
-
-
-### Manually from the repo (If you want to use my version of application.)
-
-- Install python3.9, setuptools, wheel, and requests
+- Install python3.11, setuptools, wheel, and requests
 ```bash
 # For Ubuntu or Debian based systems
 sudo apt install python3 python3-requests python3-setuptools-git
@@ -96,6 +79,7 @@ sudo pacman -S python python-requests python-setuptools-git
 ```bash
  git clone https://github.com/AhanafRASHID/legendary_parameter_fix.git
  cd legendary_parameter_fix
+ pip install -r requirements.txt
  pip install .
 ```
 
