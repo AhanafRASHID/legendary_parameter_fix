@@ -1,7 +1,6 @@
 # !/usr/bin/env python
 # coding: utf-8
 
-import os
 import sys
 
 from setuptools import setup
@@ -13,15 +12,15 @@ if sys.version_info < (3, 9):
 
 with open("README.md", "r") as fh:
     long_description_l = fh.readlines()
-    del long_description_l[2:5]  # remove discord/twitter link and logo
+    del long_description_l[2:10]  # remove discord/twitter link and logo
     long_description = ''.join(long_description_l)
 
 setup(
     name='legendary-gl',
     version=legendary_version,
     license='GPL-3',
-    author='Rodney',
-    author_email='rodney@rodney.io',
+    author='Ahanaf',
+    author_email='ahanafrashid2020@outlook.com',
     packages=[
         'legendary',
         'legendary.api',
@@ -44,8 +43,8 @@ setup(
         webview=['pywebview>=3.4'],
         webview_gtk=['pywebview>=3.4', 'PyGObject']
     ),
-    url='https://github.com/derrod/legendary',
-    description='Free and open-source replacement for the Epic Games Launcher application',
+    url='https://github.com/AhanafRASHID/legendary_parameter_fix.git',
+    description='Free and open-source replacement for the Epic Games Launcher application unstable but usable version',
     long_description=long_description,
     long_description_content_type="text/markdown",
     python_requires='>=3.9',
