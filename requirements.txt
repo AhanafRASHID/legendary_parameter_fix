@@ -1,2 +1,4 @@
 requests<3.0
 filelock
+colorama
+setuptools>=70.0.0

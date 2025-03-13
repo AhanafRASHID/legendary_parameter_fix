@@ -69,26 +69,27 @@ class LegendaryCLI:
     @staticmethod
     def _print_json(data, pretty=False):
         if pretty:
-            print(json.dumps(data, indent=2, sort_keys=True))
+            print(Fore.LIGHTGREEN_EX+json.dumps(data, indent=2, sort_keys=True))
+            print(Fore.RESET)
         else:
             print(json.dumps(data))
 
     def auth(self, args):
         if args.auth_delete:
             self.core.lgd.invalidate_userdata()
-            logger.info('User data deleted.')
+            logger.info(Fore.RED+'User data deleted successfully.'+Fore.RESET)
             return
 
         try:
-            logger.info('Testing existing login data if present...')
+            logger.info(Fore.GREEN+'Testing existing login data if present...'+Fore.RESET)
             if self.core.login():
-                logger.info('Stored credentials are still valid, if you wish to switch to a different '
-                            'account, run "legendary auth --delete" and try again.')
+                logger.info(Fore.LIGHTMAGENTA_EX+'Stored credentials are still valid, if you wish to switch to a different '
+                            'account, run "legendary auth --delete" and try again.'+Fore.RESET)
                 return
         except ValueError:
             pass
         except InvalidCredentialsError:
-            logger.error('Stored credentials were found but were no longer valid. Continuing with login...')
+            logger.error(Fore.RED+'Stored credentials were found but were no longer valid. Continuing with login...'+Fore.RESET)
             self.core.lgd.invalidate_userdata()
 
         # Force an update check and notice in case there are API changes
@@ -101,8 +102,8 @@ class LegendaryCLI:
                 egl_wine_pfx = None
                 lutris_wine_pfx = os.path.expanduser('~/Games/epic-games-store')
                 if os.path.exists(lutris_wine_pfx):
-                    logger.info(f'Found Lutris EGL WINE prefix at "{lutris_wine_pfx}"')
-                    if args.yes or get_boolean_choice('Do you want to use the Lutris install?'):
+                    logger.info(Fore.YELLOW+f'Found Lutris EGL WINE prefix at "{lutris_wine_pfx}"'+Fore.RESET)
+                    if args.yes or get_boolean_choice(Fore.YELLOW+'Do you want to use the Lutris install?'+Fore.RESET):
                         egl_wine_pfx = lutris_wine_pfx
 
                 if not egl_wine_pfx:
@@ -112,7 +113,7 @@ class LegendaryCLI:
                         print('Empty input, quitting...')
                         exit(0)
                     if not os.path.exists(egl_wine_pfx) and os.path.isdir(egl_wine_pfx):
-                        print('Path is invalid (does not exist)!')
+                        print(Fore.RED+'Path is invalid (does not exist)!'+Fore.RESET)
                         exit(1)
 
                 try:
@@ -121,8 +122,8 @@ class LegendaryCLI:
                                                                 'EpicGamesLauncher', 'Saved',
                                                                 'Config', 'Windows'))
                 except Exception as e:
-                    logger.error(f'Got exception when trying to read WINE registry: {e!r}')
-                    logger.error('Make sure you are specifying a valid wine prefix.')
+                    logger.error(Fore.RED+f'Got exception when trying to read WINE registry: {e!r}')
+                    logger.error('Make sure you are specifying a valid wine prefix.'+Fore.RESET)
                     exit(1)
 
                 if not os.path.exists(egl_appdata):
@@ -135,14 +136,14 @@ class LegendaryCLI:
             logger.info('Importing login session from the Epic Launcher...')
             try:
                 if self.core.auth_import():
-                    logger.info('Successfully imported login session from EGS!')
-                    logger.info(f'Now logged in as user "{self.core.lgd.userdata["displayName"]}"')
+                    logger.info(Fore.GREEN+'Successfully imported login session from EGS!'+Fore.RESET)
+                    logger.info(f'Now logged in as user '+Fore.BLUE+'"{self.core.lgd.userdata["displayName"]}"'+Fore.RESET)
                     return
                 else:
-                    logger.warning('Login session from EGS seems to no longer be valid.')
+                    logger.warning(Fore.RED+'Login session from EGS seems to no longer be valid.'+Fore.RESET)
                     exit(1)
             except Exception as e:
-                logger.error(f'No EGS login session found, please login manually. (Exception: {e!r})')
+                logger.error(Fore.RED+f'No EGS login session found, please login manually. (Exception: {e!r})'+Fore.RED)
                 exit(1)
 
         exchange_token = ''
@@ -158,10 +159,10 @@ class LegendaryCLI:
                 input(Fore.CYAN + "Press any key to continue...")
                 url = f'https://www.epicgames.com/id/api/redirect?clientId={self._clientID}&responseType=code'
                 webbrowser.open(url)
-                print(f'If the web page did not open automatically, please manually open the following URL: {url}')
+                print(Fore.LIGHTBLACK_EX+f'If the web page did not open automatically, please manually open the following URL: {url}')
                 input_code = ''
                 while input_code == '':
-                    input_code = input(Fore.GREEN+'Please enter the authorization code from the JSON in your browser: ')
+                    input_code = input(Fore.GREEN+'Please enter the authorization code from the JSON in your browser: '+Fore.RESET)
                 auth_code = input_code
                 auth_code = auth_code.strip()
                 if auth_code[0] == '{':
